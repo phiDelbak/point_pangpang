@@ -1,4 +1,4 @@
-# point_pang_pang
+# point_pangpang
 
 XpressEngine(XE) 에서 사용하는 에드온입니다.
 
