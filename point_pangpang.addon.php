@@ -18,19 +18,23 @@
 		//에러시 패스
 		if($this->error) return;
 
-		if(($addon_info->is_document == 'Y' || $addon_info->is_comment == 'Y') && $this->act=='procFileUpload'){
+		if(($addon_info->is_document == 'Y' || $addon_info->is_comment == 'Y') && ($this->act=='procFileUpload' || $this->act=='procFileIframeUpload')){
 			//업로드시 새문서 체크
-			$_SESSION['addon_point_pangpang_uploadTargetSrl'] = Context::get('uploadTargetSrl')?false:true;
+			$upload_srl = intval(Context::get('uploadTargetSrl'));
+			if(!$upload_srl) $upload_srl = intval(Context::get('upload_target_srl'));
+			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;	
+			if($_SESSION['addon_point_pangpang_new_upload']) $_SESSION['addon_point_pangpang_upload_srl'] = $upload_srl;
 		}
 
 		if(($addon_info->is_document == 'Y' && $this->act=='procBoardInsertDocument') || ($addon_info->is_comment == 'Y' && $this->act=='procBoardInsertComment')){
-			$upload_srl = $_SESSION['addon_point_pangpang_uploadTargetSrl'];
-			unset($_SESSION['addon_point_pangpang_uploadTargetSrl']);
+			$upload_srl = $_SESSION['addon_point_pangpang_upload_srl'];			
+			unset($_SESSION['addon_point_pangpang_new_upload']);
+			unset($_SESSION['addon_point_pangpang_upload_srl']);
 
 			//해당 액션이고 신규 문서이면
-			if($this->act=='procBoardInsertDocument' && (!Context::get('document_srl') || (Context::get('document_srl') && $upload_srl)))
+			if($this->act=='procBoardInsertDocument' && (!Context::get('document_srl') || ($upload_srl && Context::get('document_srl') == $upload_srl)))
 				$addon_act = 'document';
-			elseif($this->act=='procBoardInsertComment' && (!Context::get('comment_srl') || (Context::get('comment_srl') && $upload_srl)))
+			elseif($this->act=='procBoardInsertComment' && (!Context::get('comment_srl') || ($upload_srl && Context::get('comment_srl') == $upload_srl)))
 				$addon_act = 'comment';
 			else return;
 
@@ -158,6 +162,15 @@
 			}
 		}
 	}elseif($called_position == 'before_module_proc'){
+
+		if(($addon_info->is_document == 'Y' || $addon_info->is_comment == 'Y') && ($this->act=='procFileUpload' || $this->act=='procFileIframeUpload')){
+			//업로드시 새문서 체크
+			$upload_srl = intval(Context::get('uploadTargetSrl'));
+			if(!$upload_srl) $upload_srl = intval(Context::get('upload_target_srl'));
+			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;	
+			$_SESSION['addon_point_pangpang_new_upload'] = !$upload_srl;
+		}
+
 		//글 삭제시
 		if(($this->act=='procBoardDeleteDocument' && Context::get('document_srl')) || ($this->act=='procBoardDeleteComment' && Context::get('comment_srl'))){
 
