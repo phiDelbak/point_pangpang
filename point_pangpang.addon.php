@@ -9,7 +9,7 @@
 
 	if($called_position == 'after_module_proc'){
 		//메세지가 있으면 출력후 패스
-		if($_SESSION['addon_point_pangpang_msg']&&$this->act=='dispBoardContent'){
+		if($_SESSION['addon_point_pangpang_msg']&&($this->act=='dispBoardContent'||$this->act=='dispBoardContentCommentList')){
 			Context::addHtmlFooter( '<script type="text/javascript"> alert("'.$_SESSION['addon_point_pangpang_msg'].'"); </script>' );
 			unset($_SESSION['addon_point_pangpang_msg']);
 			return;
