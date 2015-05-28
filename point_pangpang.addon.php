@@ -22,12 +22,12 @@
 			//업로드시 새문서 체크
 			$upload_srl = intval(Context::get('uploadTargetSrl'));
 			if(!$upload_srl) $upload_srl = intval(Context::get('upload_target_srl'));
-			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;	
+			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;
 			if($_SESSION['addon_point_pangpang_new_upload']) $_SESSION['addon_point_pangpang_upload_srl'] = $upload_srl;
 		}
 
 		if(($addon_info->is_document == 'Y' && $this->act=='procBoardInsertDocument') || ($addon_info->is_comment == 'Y' && $this->act=='procBoardInsertComment')){
-			$upload_srl = $_SESSION['addon_point_pangpang_upload_srl'];			
+			$upload_srl = $_SESSION['addon_point_pangpang_upload_srl'];
 			unset($_SESSION['addon_point_pangpang_new_upload']);
 			unset($_SESSION['addon_point_pangpang_upload_srl']);
 
@@ -137,6 +137,7 @@
 					$comObj->module_srl = $this->module_srl;
 					$comObj->document_srl = $this->variables['document_srl'];
 					$comObj->content = $msg_pang;
+					$comObj->use_html = 'Y';
 
 					$ccComment = &getController('comment');
 
@@ -167,7 +168,7 @@
 			//업로드시 새문서 체크
 			$upload_srl = intval(Context::get('uploadTargetSrl'));
 			if(!$upload_srl) $upload_srl = intval(Context::get('upload_target_srl'));
-			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;	
+			if(!$upload_srl) $upload_srl = $_SESSION['upload_info'][Context::get('editor_sequence')]->upload_target_srl;
 			$_SESSION['addon_point_pangpang_new_upload'] = !$upload_srl;
 		}
 
