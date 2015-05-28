@@ -4,10 +4,10 @@
 	<description>
 		글이나 댓글을 쓸때 설정된 확률만큼 보너스 포인트를 주는 에드온입니다.
 	</description>
-	<version>1.5</version>
+	<version>1.5.2</version>
 
 	<!-- This addon was created in 2011-12-01. -->
-	<date>2015-05-01</date>
+	<date>2015-05-28</date>
 
 	<author link="https://github.com/phiDelbak/point_pangpang" email_address="xe.phidel@gmail.com">
 		<name>phiDel</name>
